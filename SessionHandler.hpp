@@ -5,6 +5,13 @@
 
 
 class SessionHandler : public std::enable_shared_from_this<SessionHandler> {
+private:
+    std::function<void (char[], int)> mReceiveEventHandler;
+public:
+    void ReceiveEventHandler( const std::function<void(char[], int)>& eventHandler )
+    {
+        mReceiveEventHandler = eventHandler;
+    }
 public :
     SessionHandler(boost::asio::io_service & io_service)
         : _io_service(io_service)
@@ -13,7 +20,9 @@ public :
         
     {
         std::cout << "SessionHandler.." << std::endl;
+        mReceiveEventHandler = nullptr;
     }
+    
     ~SessionHandler(){}
 
 public :
@@ -45,6 +54,10 @@ public :
 
         }
         std::cout.write(&_packet_buffer[0], read_size);
+        if(mReceiveEventHandler != nullptr)
+        {
+            mReceiveEventHandler(_packet_buffer.c_array(), read_size);
+        }
         // printf("recv... %s", _packet_buffer);
         read_packet();
     }

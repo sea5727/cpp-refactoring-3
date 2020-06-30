@@ -52,7 +52,9 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "cstddef": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "string": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

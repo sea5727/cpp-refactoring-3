@@ -5,9 +5,17 @@
 
 
 template <typename ConnectionHandler>
-class AcceptHandler{
+class AcceptHandler : public Ilayer
+{
     using shared_hantler_t = std::shared_ptr<ConnectionHandler>;
-
+private:
+    std::function<void (char[], int)> mReceiveEventHandler;
+public:
+    
+    void ReceiveEventHandler( const std::function<void(char[], int)>& eventHandler )
+    {
+        mReceiveEventHandler = eventHandler;
+    }
 public : 
     AcceptHandler()
          : _acceptor(_io_service)
@@ -15,6 +23,7 @@ public :
     {
         std::cout << "AcceptHandler.." << std::endl;
     }
+    virtual void do_fun() { /* implementation here */ }
     void start(uint16_t port)
     {
         
@@ -25,8 +34,9 @@ public :
         _acceptor.bind(endpoint);
         _acceptor.listen();
 
-        auto handler = std::make_shared<ConnectionHandler> (_if_services.get_io_service());
-
+        auto handler = std::make_shared<SessionHandler> (_if_services.get_io_service());
+        handler->ReceiveEventHandler(mReceiveEventHandler);
+        
         _acceptor.async_accept( handler->socket(),
                                 [=](boost::system::error_code error_code){
                                     handle_new_connection(handler, error_code);
@@ -48,8 +58,10 @@ private:
             return;
         }
         handler->start();
+
+        // auto nh = std::shared_ptr<SessionHandler>(_if_services.get_io_service());
         
-        auto new_handler = std::make_shared<ConnectionHandler> (_if_services.get_io_service());
+        auto new_handler = std::make_shared<SessionHandler> (_if_services.get_io_service());
         
         _acceptor.async_accept( new_handler->socket(), 
                                 [=](boost::system::error_code error_code) {

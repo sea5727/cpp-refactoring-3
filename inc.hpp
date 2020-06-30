@@ -1,7 +1,7 @@
 #ifndef __INC_HPP__
 #define __INC_HPP__
 
-
+#include <stdio.h>
 #include <boost/thread.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
@@ -14,9 +14,11 @@
 #include <thread>
 #include <vector>
 #include "io_service_pool.hpp"
-
-#include "AcceptHandler.hpp"
+#include "singleton.hpp"
+#include "layer.hpp"
 #include "SessionHandler.hpp"
+#include "AcceptHandler.hpp"
+
 #include "WorkerHandler.hpp"
 #include "ProcessManager.hpp"
 

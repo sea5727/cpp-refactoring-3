@@ -2,7 +2,7 @@
 #define __WORKER_HANDLER_HPP__
 
 
-class WorkerHandler
+class WorkerHandler : public Ilayer
 {
 public:
     WorkerHandler()
@@ -18,6 +18,7 @@ public:
     {
         _worker_services.run();
     }
+    virtual void do_fun() { /* implementation here */ }
 
 private:
 
