@@ -13,17 +13,23 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <mutex>
+#include <memory>
 #include "io_service_pool.hpp"
-#include "singleton.hpp"
 #include "layer.hpp"
 #include "SessionHandler.hpp"
-#include "ChildSessionHandler.hpp"
-#include "test.hpp"
-#include "AcceptHandler.hpp"
 
+
+#include "AcceptHandler.hpp"
 #include "WorkerHandler.hpp"
+#include "ChildSessionHandler.hpp"
 #include "ProcessManager.hpp"
 
 
+
+#include "singleton.hpp"
+// #include "mysingleton.hpp"
+
+extern ProcessManager pm;
 
 #endif

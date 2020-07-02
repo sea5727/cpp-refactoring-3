@@ -21,8 +21,9 @@
 // 4. 기타 사설규격 ㅎㄷㄷ하다...
 
 
-ProcessManager pm;
+// 
 
+ProcessManager pm;
 
 void userFunction(char buffer[], int size) // tcp server recv handler
 {
@@ -35,20 +36,27 @@ void userFunction(char buffer[], int size) // tcp server recv handler
 
 }
 int main(int, char**) {
+    externtestfunction("main");
+    // auto pm = mysingleton::GetInstance();
+    // AcceptHandler<ChildSessionHandler> &cln = pm->cln;
+    // cln.start(5103);
+    // WorkerHandler &wh = pm->wh;
+    // wh.start(); 
 
+
+
+
+    // return 0;
     
-
     AcceptHandler<ChildSessionHandler> &cln = pm.cln;
-    cln.ReceiveEventHandler(&userFunction);
     // AcceptHandler<SessionHandler> cln;
     cln.start(5103); 
     
     WorkerHandler &wh = pm.wh;
     // WorkerHandler wh;
     wh.start(); 
-    
-    // ProcessManager::getInstance().run();
 
+    externtestfunction("main");
     while(1)
     {
         // std::cout << "Hello, world!?\n";

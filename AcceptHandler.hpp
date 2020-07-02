@@ -5,17 +5,9 @@
 
 
 template <typename ConnectionHandler>
-class AcceptHandler : public Ilayer
+class AcceptHandler : public layer
 {
     using shared_hantler_t = std::shared_ptr<ConnectionHandler>;
-private:
-    std::function<void (char[], int)> mReceiveEventHandler;
-public:
-    
-    void ReceiveEventHandler( const std::function<void(char[], int)>& eventHandler )
-    {
-        mReceiveEventHandler = eventHandler;
-    }
 public : 
     AcceptHandler()
          : _io_service(1)
@@ -24,7 +16,7 @@ public :
     {
         std::cout << "AcceptHandler.." << std::endl;
     }
-    virtual void do_fun() { /* implementation here */ }
+    // virtual void do_fun() { /* implementation here */ }
     void start(uint16_t port)
     {
         
@@ -35,8 +27,7 @@ public :
         _acceptor.bind(endpoint);
         _acceptor.listen();
 
-        auto handler = std::make_shared<ChildSessionHandler> (_if_services.get_io_service());
-        handler->ReceiveEventHandler(mReceiveEventHandler);
+        auto handler = std::make_shared<ConnectionHandler> (_if_services.get_io_service());
         
         _acceptor.async_accept( handler->socket(),
                                 [=](boost::system::error_code error_code){
@@ -49,7 +40,10 @@ public :
         });
 
     }
-
+    boost::asio::io_service & get_if_service()
+    {
+        return _if_services.get_io_service();
+    }
 private:
     void handle_new_connection( shared_hantler_t handler , boost::system::error_code const & error_code)
     {
@@ -62,13 +56,15 @@ private:
 
         // auto nh = std::shared_ptr<SessionHandler>(_if_services.get_io_service());
         
-        auto new_handler = std::make_shared<ChildSessionHandler> (_if_services.get_io_service());
+        auto new_handler = std::make_shared<ConnectionHandler> (_if_services.get_io_service());
         
         _acceptor.async_accept( new_handler->socket(), 
                                 [=](boost::system::error_code error_code) {
                                     handle_new_connection(new_handler, error_code );
                                 });
     }
+
+
 private:
     std::vector<std::thread> _accept_threads;
     boost::asio::io_service _io_service;

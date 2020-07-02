@@ -25,7 +25,7 @@ public: // 사용하고자 하는 함수를 추가한다. // 실제 사용하는
     void work() const; 
     int run()
     {
-        std::cout << "this is singleton run" << std::endl;
+        std::cout << "this is pm run" << std::endl;
     }
 public:
     AcceptHandler<ChildSessionHandler> cln;

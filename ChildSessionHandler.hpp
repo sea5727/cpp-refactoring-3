@@ -3,6 +3,7 @@
 
 #include "inc.hpp"
 
+void externtestfunction(std::string where);
 
 class ChildSessionHandler : public SessionHandler{
 
@@ -18,16 +19,8 @@ public :
     {
         // std::cout << "OnConnected!!!" << std::endl;
     }
-    virtual void OnReaded(boost::array<char, 8192> read_buffer, std::size_t size) 
-    { 
-        std::cout << "OnReaded!!! size : " << size << std::endl;
-
-        send_packet(read_buffer, size);
-    }
-    virtual void OnWrited()
-    {
-        // std::cout << "OnWrited!!!" << std::endl;
-    }
+    virtual void OnReaded(std::shared_ptr<std::vector<char>> read_buffer, std::size_t size);
+    virtual void OnWrited();
 
 public :
 

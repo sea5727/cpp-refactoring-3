@@ -3,11 +3,15 @@
 
 template <class T> 
 class singleton 
-{ 
+{
+private: 
+    // static T * _object; 
+    
 public: 
-    static T& getInstance(void) 
-    { 
-        static T object; return object; 
+    static T & getInstance(void) 
+    {
+        static T _object;
+        return _object;
     }
     
     static T* getPointer(void) 
@@ -20,7 +24,7 @@ public:
         return getInstance(); 
     } 
 
-protected: 
+public: 
     singleton() 
     {
 
@@ -29,8 +33,7 @@ protected:
     {
 
     } 
-private: 
-    singleton(const singleton&); 
+    singleton(const singleton&){};   
     singleton& operator=(const singleton&); 
 };
 

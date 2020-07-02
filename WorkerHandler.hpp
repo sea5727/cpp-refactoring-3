@@ -2,7 +2,7 @@
 #define __WORKER_HANDLER_HPP__
 
 
-class WorkerHandler : public Ilayer
+class WorkerHandler : public layer
 {
 public:
     WorkerHandler()
@@ -17,8 +17,15 @@ public:
     void start()
     {
         _worker_services.run();
+        
     }
     virtual void do_fun() { /* implementation here */ }
+
+    boost::asio::io_service & get_io_service()
+    {
+        return _worker_services.get_io_service();
+    }
+
 
 private:
 

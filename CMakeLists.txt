@@ -15,7 +15,7 @@ if(Boost_FOUND)
     link_directories(/usr/local/lib)
 endif()
 
-add_executable(cpp-refactoring-3 main.cpp)
+add_executable(cpp-refactoring-3 main.cpp ChildSessionHandler.cpp)
 target_link_libraries(cpp-refactoring-3 ${Boost_LIBRARIES} pthread)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
