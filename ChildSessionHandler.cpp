@@ -16,12 +16,16 @@ void ChildSessionHandler::OnReaded(std::shared_ptr<std::vector<char>> read_data,
     // io.post(std::bind(externtestfunction, "worker"));
 
     io.post([&]{
-        boost::asio::io_service &ifo = this->_io_service;
-        ifo.post([&]{
-            std::cout << "iof post!!!" << std::endl;
-            send_packet(reinterpret_cast<char*>(read_data->data()), read_data->size());
-            
-        });
+        //working..
+        _MESSAGE * pstMsg = (_MESSAGE * )read_data->data();
+        _CLN_PACKET * cp = (_CLN_PACKET *)pstMsg->cBody;     
+
+        std::cout << "message recv worker.." << std::endl;
+        // boost::asio::io_service &ifo = this->_io_service;
+        // ifo.post([&]{
+        //     std::cout << "iof post!!!" << std::endl;
+        //     send_packet(reinterpret_cast<char*>(read_data->data()), read_data->size());    
+        // });
     });
 
 

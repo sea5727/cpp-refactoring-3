@@ -15,6 +15,10 @@
 #include <vector>
 #include <mutex>
 #include <memory>
+#include "tmf_cln_msg.h"
+#include "cadt_cmn_msg_body.h"
+#include "MessageStructure.hpp"
+
 #include "io_service_pool.hpp"
 #include "layer.hpp"
 #include "SessionHandler.hpp"
