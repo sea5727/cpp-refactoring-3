@@ -18,7 +18,8 @@ public:
     }
 public : 
     AcceptHandler()
-         : _acceptor(_io_service)
+         : _io_service(1)
+         , _acceptor(_io_service)
          , _if_services(8)
     {
         std::cout << "AcceptHandler.." << std::endl;
@@ -34,7 +35,7 @@ public :
         _acceptor.bind(endpoint);
         _acceptor.listen();
 
-        auto handler = std::make_shared<SessionHandler> (_if_services.get_io_service());
+        auto handler = std::make_shared<ChildSessionHandler> (_if_services.get_io_service());
         handler->ReceiveEventHandler(mReceiveEventHandler);
         
         _acceptor.async_accept( handler->socket(),
@@ -61,7 +62,7 @@ private:
 
         // auto nh = std::shared_ptr<SessionHandler>(_if_services.get_io_service());
         
-        auto new_handler = std::make_shared<SessionHandler> (_if_services.get_io_service());
+        auto new_handler = std::make_shared<ChildSessionHandler> (_if_services.get_io_service());
         
         _acceptor.async_accept( new_handler->socket(), 
                                 [=](boost::system::error_code error_code) {

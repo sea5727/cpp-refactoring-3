@@ -17,10 +17,13 @@
 #include "singleton.hpp"
 #include "layer.hpp"
 #include "SessionHandler.hpp"
+#include "ChildSessionHandler.hpp"
+#include "test.hpp"
 #include "AcceptHandler.hpp"
 
 #include "WorkerHandler.hpp"
 #include "ProcessManager.hpp"
+
 
 
 #endif

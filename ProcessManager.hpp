@@ -28,7 +28,7 @@ public: // 사용하고자 하는 함수를 추가한다. // 실제 사용하는
         std::cout << "this is singleton run" << std::endl;
     }
 public:
-    AcceptHandler<SessionHandler> cln;
+    AcceptHandler<ChildSessionHandler> cln;
     WorkerHandler wh;
 };
 

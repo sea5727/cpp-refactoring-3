@@ -18,7 +18,7 @@ public:
         // exit until they are explicitly stopped.
         for (std::size_t i = 0; i < pool_size; ++i)
         {
-            io_service_ptr io_service(new boost::asio::io_service);
+            io_service_ptr io_service(new boost::asio::io_service(1));
             _worksptr work(new boost::asio::io_service::work(*io_service));
             _io_services.push_back(io_service);
             _works.push_back(work);
