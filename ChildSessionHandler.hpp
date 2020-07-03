@@ -19,7 +19,7 @@ public :
     {
         // std::cout << "OnConnected!!!" << std::endl;
     }
-    virtual void OnReaded(std::shared_ptr<std::vector<char>> read_buffer, std::size_t size);
+    virtual void OnReaded(char read_buffer[], std::size_t size);
     virtual void OnWrited();
 
 public :

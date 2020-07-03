@@ -56,6 +56,5 @@
         "string": "cpp",
         "random": "cpp",
         "memory": "cpp"
-    },
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    }
 }

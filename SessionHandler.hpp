@@ -12,6 +12,7 @@ public :
         , _strand(io_service)
         
     {
+        memset(buffer, 0x00, sizeof(buffer));
         std::cout << "SessionHandler.." << std::endl;
     }
     
@@ -31,7 +32,7 @@ public :
     {
         
         boost::asio::async_read( _socket, 
-                                boost::asio::buffer(_read_buffer),
+                                boost::asio::buffer(buffer),
                                 // boost::asio::transfer_exactly(8192) , 
                                 boost::asio::transfer_at_least(1),
                                 [me=shared_from_this()](boost::system::error_code const & error_code, std::size_t read_size){
@@ -66,8 +67,9 @@ public :
         }
 
 
-        std::shared_ptr<std::vector<char>> read_data = std::make_shared<std::vector<char>>(_read_buffer.begin(), _read_buffer.begin() + read_size);
-        OnReaded(read_data, read_size);
+        // std::shared_ptr<std::vector<char>> read_data = std::make_shared<std::vector<char>>(_read_buffer.begin(), _read_buffer.begin() + read_size);
+        OnReaded(buffer, read_size);
+        // memset(buffer, 0x00, sizeof(buffer);
         read_packet();
     }
 
@@ -92,7 +94,7 @@ public :
         // std::cout << "write! success : " << write_size << std::endl;
     }  
     virtual void OnConnected() = 0;
-    virtual void OnReaded(std::shared_ptr<std::vector<char>> read_data, std::size_t size) = 0;
+    virtual void OnReaded(char read_data[], std::size_t size) = 0;
     virtual void OnWrited() = 0;
 
 public:
@@ -100,7 +102,10 @@ public:
     boost::asio::ip::tcp::socket _socket;
     // std::vector<char> _read_buffer;
     boost::array<char, 8192> _read_buffer;
+    char buffer[8192];
     boost::asio::io_service::strand _strand;
+
+    std::vector<boost::shared_ptr<boost::asio::deadline_timer>> timers;
 };
 
 #endif

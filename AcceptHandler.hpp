@@ -14,7 +14,7 @@ public :
          , _acceptor(_io_service)
          , _if_services(8)
     {
-        std::cout << "AcceptHandler.." << std::endl;
+        // std::cout << "AcceptHandler.." << std::endl;
     }
     // virtual void do_fun() { /* implementation here */ }
     void start(uint16_t port)
